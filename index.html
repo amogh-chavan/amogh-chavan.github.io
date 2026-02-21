@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amogh Chavan | Backend Engineer</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        /* Base Styling & Soft Dark Mode */
+        :root {
+            --bg-color: #040d21;
+            --card-bg: rgba(15, 23, 42, 0.65);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --accent: #38BDF8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Fixed 3D Globe Background Containers */
+        .globe-bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-color);
+        }
+
+        .background-lights {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        #globeCanvas {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+
+        /* Scrollable Content Overlay */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 60px 20px;
+            pointer-events: none; /* Lets mouse events pass through to the globe */
+        }
+
+        /* --- NEW HERO SECTION --- */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 2%; 
+        }
+
+        .hero-section h1 {
+            font-size: 4rem;
+            margin-bottom: 0.2rem;
+            color: var(--text-main);
+        }
+
+        .hero-section h2 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--accent);
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .hero-section p {
+            max-width: 450px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            pointer-events: auto; /* Makes links clickable */
+        }
+
+        .contact-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 1rem;
+            border: 1px solid var(--accent);
+            padding: 8px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            background: rgba(15, 23, 42, 0.3);
+        }
+
+        .contact-links a:hover {
+            background-color: var(--accent);
+            color: var(--bg-color);
+        }
+
+        /* --- GLASSMORPHISM CARDS --- */
+        .card {
+            pointer-events: auto;
+            user-select: text; 
+            -webkit-user-select: text;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            color: var(--text-main);
+        }
+
+        p, li {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        ul { padding-left: 20px; }
+
+        .job-entry { margin-bottom: 35px; }
+        .job-entry:last-child { margin-bottom: 0; }
+        
+        .job-title {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .job-date {
+            font-size: 0.95rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .skills-grid div strong { 
+            color: var(--text-main); 
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero-section h1 { font-size: 2.8rem; }
+            .hero-section h2 { font-size: 1.4rem; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .card { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="globe-bg-container">
+        <img src="https://github.githubassets.com/images/modules/site/home/hero-glow.svg" alt="Glowing universe" class="background-lights">
+        <div id="globeCanvas"></div>
+    </div>
+
+    <div class="content-wrapper">
+        
+        <section class="hero-section">
+            <h1>Amogh Chavan</h1>
+            <h2>Senior Software Engineer</h2>
+            <p>Building high-throughput backend systems for Live Streaming, Quick commerce, and Data Analytics.</p>
+            
+            <div class="contact-links">
+                <a href="mailto:chavanamogh1@gmail.com">Email</a>
+                <a href="https://linkedin.com/in/amogh-chavan" target="_blank">LinkedIn</a>
+                <a href="https://github.com/amogh-chavan" target="_blank">GitHub</a>
+                <a href="https://leetcode.com/u/amogh-chavan" target="_blank">LeetCode</a>
+            </div>
+        </section>
+
+        <section class="card">
+            <h3>Experience</h3>
+            
+            <div class="job-entry">
+                <div class="job-title">DAZN Software Pvt. Ltd. | Senior Software Engineer</div>
+                <div class="job-date">April 2024 - Present</div>
+                <ul>
+                    <li>Designed and implemented key features for the DAZN sports streaming platform, handling 50,000 RPS and over 50 million user playback attempts, ensuring high scalability.</li>
+                    <li>Contributed to projects that Prevented Illegal Account Sharing, enhancing security and ensuring a fair streaming experience for all users.</li>
+                    <li>Implemented Amazon ElastiCache layer to reduce load by 50% on AWS DynamoDB.</li>
+                    <li>Optimized SQL Queries which reduced Amazon Redshift Serverless cost by 10%.</li>
+                </ul>
+            </div>
+
+            <div class="job-entry">
+                <div class="job-title">Techshack Pvt. Ltd. | Software Engineer</div>
+                <div class="job-date">March 2022 - February 2024</div>
+                <ul>
+                    <li>Designed and Built Core Backend Systems for Speedyy Superapp's quick commerce services, including Food, Grocery, Pickup, and Hyperlocal Delivery.</li>
+                    <li>Successfully processed 50,000 orders, Handling up to 500 concurrent orders during peak hours.</li>
+                    <li>Integrated real-time distance and time calculations for Order tracking functionalities using Google Maps and OSRM.</li>
+                </ul>
+            </div>
+
+            <div class="job-entry">
+                <div class="job-title">E2E Research Services Pvt. Ltd. | Full Stack Developer</div>
+                <div class="job-date">June 2021 - March 2022</div>
+                <ul>
+                    <li>Developed a Data Analytics Dashboard from scratch to generate interactive charts.</li>
+                    <li>Developed a Parser Engine to process and analyze extensive survey data sets with more than 1 Lakh responses.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="card">
+            <h3>Recent Projects & Milestones</h3>
+            
+            <div class="job-entry">
+                <div class="job-title">Society Management Platform (Backend)</div>
+                <div class="job-date">Ongoing Project</div>
+                <ul>
+                    <li>Architecting a robust backend web server utilizing <strong>Node.js</strong> and <strong>MongoDB</strong>.</li>
+                    <li>Designing custom security and administrative features, including a specialized blacklist management system for society helpers.</li>
+                    <li>Exploring modern event-driven cloud architectures to replace traditional cron jobs, mirroring modern integrations like AWS EventBridge.</li>
+                </ul>
+            </div>
+
+            <div class="job-entry">
+                <div class="job-title">BelleVie Software Engineer Challenge</div>
+                <div class="job-date">2025</div>
+                <ul>
+                    <li>Participated in rigorous algorithmic preparation for the BelleVie Backend Engineering coding challenge, focusing heavily on advanced data structures (like monotonic stacks) and system optimization.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="card">
+            <h3>Technical Skills</h3>
+            <div class="skills-grid">
+                <div>
+                    <strong>Languages</strong><br>
+                    JavaScript, TypeScript, Java, Rust, SQL, HCL, Python
+                </div>
+                <div>
+                    <strong>Frameworks</strong><br>
+                    Node.js, NestJS, Express.js, Fastify
+                </div>
+                <div>
+                    <strong>Databases</strong><br>
+                    PostgreSQL, MongoDB, Redis, DynamoDB, Redshift
+                </div>
+                <div>
+                    <strong>DevOps & Infrastructure</strong><br>
+                    Docker, Terraform, AWS, GitHub Actions
+                </div>
+                <div>
+                    <strong>Messaging & Streaming</strong><br>
+                    Kafka, SQS, Firehose, SNS, RabbitMQ
+                </div>
+                <div>
+                    <strong>Monitoring</strong><br>
+                    New Relic, Coralogix, Grafana, Elasticsearch, Kibana
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const globeCanvas = document.getElementById('globeCanvas');
+
+        const scene = new THREE.Scene();
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setClearColor(0x000000, 0);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        globeCanvas.appendChild(renderer.domElement);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 6;
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        const light1 = new THREE.PointLight(0x5a54ff, 0.75);
+        light1.position.set(-150, 150, -50);
+        const light2 = new THREE.PointLight(0x4158f6, 0.75);
+        light2.position.set(-400, 200, 150);
+        const light3 = new THREE.PointLight(0x803bff, 0.7);
+        light3.position.set(100, 250, -100);
+        scene.add(light1, light2, light3);
+
+        const atmosphereShader = {
+            'atmosphere': {
+                uniforms: {},
+                vertexShader: [
+                    'varying vec3 vNormal;',
+                    'void main() {',
+                    'vNormal = normalize( normalMatrix * normal );',
+                    'gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );',
+                    '}'
+                ].join('\n'),
+                fragmentShader: [
+                    'varying vec3 vNormal;',
+                    'void main() {',
+                    'float intensity = pow( 0.99 - dot( vNormal, vec3( 0, 0, 1.0 ) ), 6.0 );',
+                    'gl_FragColor = vec4( .28, .48, 1.0, 1.0 ) * intensity;',
+                    '}'
+                ].join('\n')
+            }
+        };
+
+        const atmosphereGeometry = new THREE.SphereGeometry(2, 64, 64);
+        const atmosphereMaterial = new THREE.ShaderMaterial({
+            uniforms: THREE.UniformsUtils.clone(atmosphereShader['atmosphere'].uniforms),
+            vertexShader: atmosphereShader['atmosphere'].vertexShader,
+            fragmentShader: atmosphereShader['atmosphere'].fragmentShader,
+            side: THREE.BackSide,
+            blending: THREE.AdditiveBlending,
+            transparent: true
+        });
+
+        const atm = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+        atm.scale.set(1.05, 1.05, 1.05);
+        atm.position.set(-.1, .1, 0);
+        scene.add(atm);
+
+        const sphereGeometry = new THREE.SphereGeometry(2, 64, 64);
+        const sphereMaterial = new THREE.MeshLambertMaterial({ color: 0xeeeeee });
+        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        scene.add(sphere);
+
+        const loader = new THREE.TextureLoader();
+        loader.setCrossOrigin(''); 
+        const overlayMaterial = new THREE.MeshBasicMaterial({
+            map: loader.load('https://i.imgur.com/JLFp6Ws.png'),
+            transparent: true
+        });
+        const overlaySphereGeometry = new THREE.SphereGeometry(2.003, 64, 64);
+        const overlaySphere = new THREE.Mesh(overlaySphereGeometry, overlayMaterial);
+        sphere.add(overlaySphere);
+
+        const numPoints = 100;
+        const start = new THREE.Vector3(0, 1.5, 1.3);
+        const middle = new THREE.Vector3(.6, .6, 3.2);
+        const end = new THREE.Vector3(1.5, -1, .8);
+        const curveQuad = new THREE.QuadraticBezierCurve3(start, middle, end);
+        const tubeMaterial = new THREE.MeshBasicMaterial({ color: 0xd965fa });
+
+        const tubeGeometries = [];
+        const rotations = [
+            { y: 0, z: 0, x: 0 },
+            { y: .75, z: .75, x: -.1 },
+            { y: 2.1, z: .5, x: .2 },
+            { y: 2.3, z: .8, x: .2 },
+            { y: 2.9, z: 1.1, x: 2 },
+            { y: 7.1, z: 1, x: 4.4 },
+            { y: 2.1, z: 3, x: 4.4 },
+            { y: 2.5, z: 1, x: 1.1 }
+        ];
+
+        for (let i = 0; i < 8; i++) {
+            const tube = new THREE.TubeGeometry(curveQuad, numPoints, 0.01, 20, false);
+            tube.setDrawRange(0, 10000);
+            tubeGeometries.push(tube);
+            const curveMesh = new THREE.Mesh(tube, tubeMaterial);
+            curveMesh.rotation.set(rotations[i].x, rotations[i].y, rotations[i].z);
+            sphere.add(curveMesh);
+        }
+
+        const cylinderGeometry = new THREE.CylinderGeometry(.01, .01, 4.25, 32);
+        const cylinderMaterial = new THREE.MeshBasicMaterial({ color: 0x00ddff, transparent: true, opacity: .5 });
+
+        const cylRotations = [
+            { x: .75, z: 0 }, { x: .74, z: -.05 }, { x: .72, z: -.07 },
+            { x: -1, z: 2 }, { x: .8, z: .5 }, { x: 1.05, z: 0 },
+            { x: 2, z: 3 }, { x: .8, z: 2.5 }
+        ];
+
+        cylRotations.forEach(rot => {
+            const cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+            cylinder.rotation.set(rot.x, 0, rot.z);
+            sphere.add(cylinder);
+        });
+
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+
+        globeCanvas.addEventListener('mousedown', (e) => { isDragging = true; });
+        
+        globeCanvas.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const deltaMove = { x: e.offsetX - previousMousePosition.x };
+                sphere.rotation.y += deltaMove.x * 0.004;
+            }
+            previousMousePosition = { x: e.offsetX, y: e.offsetY };
+        });
+
+        window.addEventListener('mouseup', () => { isDragging = false; });
+        globeCanvas.addEventListener('mouseout', () => { isDragging = false; });
+
+        let renderCount = 0;
+        let currentGrowing = 0;
+
+        function GrowTube(index, count) {
+            count = Math.ceil(count / 3) * 3;
+            tubeGeometries[index].setDrawRange(0, count);
+            if (index > 2) {
+                tubeGeometries[index - 3].setDrawRange(count, 10000);
+            } else {
+                tubeGeometries[(tubeGeometries.length - 3) + index].setDrawRange(count, 10000);
+            }
+        }
+
+        const animate = function() {
+            if (renderCount < 10000) {
+                renderCount += 80;
+                GrowTube(currentGrowing, renderCount);
+            } else {
+                renderCount = 0;
+                currentGrowing = (currentGrowing >= tubeGeometries.length - 1) ? 0 : currentGrowing + 1;
+            }
+
+            if (!isDragging) {
+                sphere.rotation.y += 0.0005; 
+            }
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        };
+        
+        animate();
+    </script>
+</body>
+</html>
