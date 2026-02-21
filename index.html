@@ -71,7 +71,7 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 0 20px 60px 20px;
-            pointer-events: none; /* Lets mouse events pass through to the globe */
+            pointer-events: none; 
         }
 
         /* --- NEW HERO SECTION --- */
@@ -81,6 +81,23 @@
             flex-direction: column;
             justify-content: center;
             padding-left: 2%; 
+        }
+        
+        /* Profile Image Styling */
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+            margin-bottom: 25px;
+            pointer-events: auto; 
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-img:hover {
+            transform: scale(1.05);
         }
 
         .hero-section h1 {
@@ -109,7 +126,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
-            pointer-events: auto; /* Makes links clickable */
+            pointer-events: auto; 
         }
 
         .contact-links a {
@@ -122,6 +139,9 @@
             transition: all 0.3s ease;
             backdrop-filter: blur(5px);
             background: rgba(15, 23, 42, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .contact-links a:hover {
@@ -191,8 +211,10 @@
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
+            .hero-section { justify-content: flex-start; padding-top: 15vh; }
             .hero-section h1 { font-size: 2.8rem; }
             .hero-section h2 { font-size: 1.4rem; }
+            .profile-img { width: 110px; height: 110px; }
             .skills-grid { grid-template-columns: 1fr; }
             .card { padding: 25px; }
         }
@@ -208,6 +230,7 @@
     <div class="content-wrapper">
         
         <section class="hero-section">
+            <img src="linkedin.jpeg" alt="Amogh Chavan Profile" class="profile-img">
             <h1>Amogh Chavan</h1>
             <h2>Senior Software Engineer</h2>
             <p>Building high-throughput backend systems for Live Streaming, Quick commerce, and Data Analytics.</p>
@@ -218,6 +241,14 @@
                 <a href="https://github.com/amogh-chavan" target="_blank">GitHub</a>
                 <a href="https://leetcode.com/u/amogh-chavan" target="_blank">LeetCode</a>
             </div>
+        </section>
+
+        <section class="card">
+            <h3>About Me</h3>
+            <p>I am a passionate Backend Engineer who likes building scalable distributed backend systems. I enjoy working across the entire Backend stack—Databases, System Infrastructure, Backend Systems, and Network Engineering.</p>
+            <p>I have a deep curiosity for understanding how things work at every level of the stack. I constantly look for ways to optimize performance at every layer and design systems that are truly robust, maintainable, and high-performing. I have experience in building web servers capable of handling <strong>50,000 Requests per second</strong>.</p>
+            <p>I like working in fast-paced, transparent environments where people are motivated and talented to build great technology. I take full ownership of my work and care deeply about getting things right.</p>
+            <p>I also enjoy attending tech talks, participating in engineering discussions, and connecting with people who share a passion for backend systems and distributed architecture.</p>
         </section>
 
         <section class="card">
@@ -255,33 +286,11 @@
         </section>
 
         <section class="card">
-            <h3>Recent Projects & Milestones</h3>
-            
-            <div class="job-entry">
-                <div class="job-title">Society Management Platform (Backend)</div>
-                <div class="job-date">Ongoing Project</div>
-                <ul>
-                    <li>Architecting a robust backend web server utilizing <strong>Node.js</strong> and <strong>MongoDB</strong>.</li>
-                    <li>Designing custom security and administrative features, including a specialized blacklist management system for society helpers.</li>
-                    <li>Exploring modern event-driven cloud architectures to replace traditional cron jobs, mirroring modern integrations like AWS EventBridge.</li>
-                </ul>
-            </div>
-
-            <div class="job-entry">
-                <div class="job-title">BelleVie Software Engineer Challenge</div>
-                <div class="job-date">2025</div>
-                <ul>
-                    <li>Participated in rigorous algorithmic preparation for the BelleVie Backend Engineering coding challenge, focusing heavily on advanced data structures (like monotonic stacks) and system optimization.</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="card">
-            <h3>Technical Skills</h3>
+            <h3>Technical Expertise</h3>
             <div class="skills-grid">
                 <div>
-                    <strong>Languages</strong><br>
-                    JavaScript, TypeScript, Java, Rust, SQL, HCL, Python
+                    <strong>Programming Languages</strong><br>
+                    JavaScript, TypeScript, C, C++, Rust, Java, Python
                 </div>
                 <div>
                     <strong>Frameworks</strong><br>
@@ -292,15 +301,15 @@
                     PostgreSQL, MongoDB, Redis, DynamoDB, Redshift
                 </div>
                 <div>
-                    <strong>DevOps & Infrastructure</strong><br>
-                    Docker, Terraform, AWS, GitHub Actions
+                    <strong>Cloud & Infrastructure</strong><br>
+                    AWS (EC2, ECS, DynamoDB, Redshift, ElastiCache, MemoryDB, RDS, SQS, SNS, SES, Firehose, Load Balancers, Route53, VPC, Secrets Manager, CloudWatch), Terraform (HCL), CDKTF
                 </div>
                 <div>
                     <strong>Messaging & Streaming</strong><br>
-                    Kafka, SQS, Firehose, SNS, RabbitMQ
+                    Kafka, SQS, Firehose (Batch), SNS, RabbitMQ
                 </div>
                 <div>
-                    <strong>Monitoring</strong><br>
+                    <strong>Monitoring & Analytics</strong><br>
                     New Relic, Coralogix, Grafana, Elasticsearch, Kibana
                 </div>
             </div>
