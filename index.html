@@ -18,7 +18,7 @@
 
     <script>document.documentElement.classList.add('js');</script>
     <script type="importmap">
-        { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js" } }
+        { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js" } }
     </script>
 
     <style>
@@ -313,7 +313,7 @@
         .job:nth-child(2)::before { border-color: var(--other); box-shadow: 0 0 10px rgba(163, 113, 247, 0.5); }
         .job:nth-child(3)::before { border-color: var(--accent); box-shadow: 0 0 10px rgba(121, 192, 255, 0.5); }
         .job:nth-child(4)::before { border-color: #56d4b1; box-shadow: 0 0 10px rgba(86, 212, 177, 0.5); }
-        .job-meta { font-size: 0.88rem; color: var(--muted); margin: -4px 0 0; }
+        .job-meta { font-size: 0.88rem; color: var(--muted); margin: -4px 0 10px; }
         .job-head {
             display: flex;
             flex-wrap: wrap;
@@ -410,12 +410,12 @@
         <header class="container hero" id="top">
             <div class="hero-intro">
                 <div class="profile">
-                    <img src="linkedin.jpeg" alt="Amogh Chavan" width="76" height="76">
+                    <img src="avatar.webp" alt="Amogh Chavan" width="76" height="76">
                     <span class="status">Backend · Distributed systems</span>
                 </div>
                 <h1><span class="grad">Amogh Chavan</span></h1>
                 <p class="role">Software Development Engineer 3 at Lodha</p>
-                <p class="lead">Building high-throughput backend systems for live streaming, quick commerce, and data analytics.</p>
+                <p class="lead">Building scalable backend systems across real estate, live streaming, quick commerce, and data analytics.</p>
                 <div class="actions">
                     <a class="btn primary" href="mailto:chavanamogh1@gmail.com">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
@@ -457,6 +457,13 @@
                             <time>Jan 2026 — Present</time>
                         </div>
                         <p class="job-meta">Mumbai, India · Full-time</p>
+                        <ul>
+                            <li>Own the technology behind the visitor management system used across all Lodha properties.</li>
+                            <li>Integrated the visitor management system with third-party turnstile devices for on-site access control.</li>
+                            <li>Improving the product and re-architecting it to scale across the property portfolio.</li>
+                            <li>Introduced development practices that improved the team's software development lifecycle.</li>
+                            <li>Lead a team of 4 developers.</li>
+                        </ul>
                     </article>
                     <article class="job">
                         <div class="job-head">
@@ -464,10 +471,12 @@
                             <time>Apr 2024 — Jan 2026</time>
                         </div>
                         <ul>
-                            <li>Designed and implemented key features for the DAZN sports streaming platform, handling 50,000 RPS and over 50 million user playback attempts, ensuring high scalability.</li>
-                            <li>Contributed to projects that prevented illegal account sharing, enhancing security and ensuring a fair streaming experience for all users.</li>
+                            <li>Scaled backend services for the DAZN sports streaming platform to handle up to 50,000 requests per second during the FIFA Club World Cup, across over 50 million user playback attempts.</li>
+                            <li>Improved the concurrency control system that manages how many devices can stream simultaneously on an account.</li>
+                            <li>Built measures to detect malicious usage patterns and prevent illegal account sharing, ensuring a secure and fair streaming experience.</li>
                             <li>Implemented an Amazon ElastiCache layer that reduced load on AWS DynamoDB by 50%.</li>
                             <li>Optimized SQL queries, reducing Amazon Redshift Serverless cost by 10%.</li>
+                            <li>Worked across playback, concurrency, and DRM systems.</li>
                         </ul>
                     </article>
                     <article class="job">
@@ -476,9 +485,12 @@
                             <time>Mar 2022 — Feb 2024</time>
                         </div>
                         <ul>
-                            <li>Designed and built core backend systems for Speedyy Superapp's quick-commerce services, including Food, Grocery, Pickup, and Hyperlocal Delivery.</li>
-                            <li>Successfully processed 50,000 orders, handling up to 500 concurrent orders during peak hours.</li>
-                            <li>Integrated real-time distance and time calculations for order tracking using Google Maps and OSRM.</li>
+                            <li>Designed and built core backend services for Speedyy Superapp's Food, Grocery, Pickup, and Hyperlocal Delivery businesses: orders, payments, refunds, delivery fleet management, coupons, notifications, search, outlet ranking, and subscriptions.</li>
+                            <li>Processed 50,000 orders, handling up to 500 concurrent orders during peak hours.</li>
+                            <li>Built cron services for vendor payouts, outlet serviceability, vendor onboarding, and menu uploads.</li>
+                            <li>Designed database schemas and wrote complex PostgreSQL queries, procedures, and functions.</li>
+                            <li>Integrated real-time distance and time calculations for order tracking using Google Maps and OSRM, plus third-party services including Shadowfax, Cashfree, and Petpooja.</li>
+                            <li>Conducted PR reviews and maintained unit test coverage across services.</li>
                         </ul>
                     </article>
                     <article class="job">
@@ -487,8 +499,9 @@
                             <time>Jun 2021 — Mar 2022</time>
                         </div>
                         <ul>
-                            <li>Developed a data analytics dashboard from scratch to generate interactive charts.</li>
+                            <li>Built SaaS data visualization products on top of survey platforms such as Confirmit and Decipher, generating interactive charts, PDFs, editable PowerPoint decks, and Excel reports with dynamic filters and sorting.</li>
                             <li>Developed a parser engine to process and analyze survey datasets with more than 100,000 (1 lakh) responses.</li>
+                            <li>Recognized twice for exceptional performance (September and December 2021).</li>
                         </ul>
                     </article>
                 </div>
